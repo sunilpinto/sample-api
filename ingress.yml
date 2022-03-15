@@ -1,16 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
     name: frontend-ingress
 spec:
     rules:
-    - http:
+    - host: hello-world.info
+      http:
         paths:
         - path: /api
+          pathType: Prefix
           backend:
-            serviceName: frontend-svc
-            servicePort: 3000
+            service:
+              name: frontend-svc
+              port:
+                number: 3000
         - path: /
+          pathType: Prefix
           backend:
-            serviceName: static-svc
-            servicePort: 80
+            service:
+              name: static-svc
+              port:
+                number: 80
